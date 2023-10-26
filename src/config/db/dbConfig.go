@@ -20,19 +20,29 @@ import (
 var userDatabase string
 var passwordDatabase string
 var databaseName string
+var databaseHost string
+var databasePort string
+var connectionUrl string
 
 func LoadConfigDB() {
 
 	userDatabase = os.Getenv("USER_DATABASE")
 	passwordDatabase = os.Getenv("PASSWORD_DATABASE")
 	databaseName = os.Getenv("DATABASE_NAME")
+	databaseHost = os.Getenv("DATABASE_HOST")
+	databasePort = os.Getenv("DATABASE_PORT")
+	connectionUrl = os.Getenv("CONNECTION_URL")
 
 	createDateBaseIfNotExists()
 }
 
+func buildConnectionUrl() string {
+	return fmt.Sprintf(connectionUrl, userDatabase, passwordDatabase, databaseHost, databasePort, databaseName)
+}
+
 func StartConnection() (*sql.DB, error) {
 
-	connection, err := sql.Open("mysql", "root:root@/productdb?charset=utf8&parseTime=True&loc=Local&multiStatements=true")
+	connection, err := sql.Open("mysql", buildConnectionUrl())
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -89,7 +99,7 @@ func LoadMigration() {
 
 func createDateBaseIfNotExists() {
 
-	db, err := sql.Open("mysql", "root:root@/")
+	db, err := sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/", userDatabase, passwordDatabase, databaseHost, databasePort))
 
 	if err != nil {
 		log.Fatal(err)
