@@ -13,6 +13,7 @@ For this project I'm using some technologies and good practices such as:
 - Docker
 
 ## Struture Package
+```
 root
  |__config
  |  |__db
@@ -25,7 +26,7 @@ root
  |__routers
  |__services
  |__utils
-
+```
 
 ## Instruction to run application
 
@@ -51,15 +52,15 @@ root
 >- You need to have docker installed on your computer.
 >- For this application to connect with database both they must both be on the same network.
 >- In the dockerfile there are some environment variables that can be used in the command mentioned in step 4. 
-    Environment avaliables:
-    - USER_DATABASE
-        defalut value: root
-    - PASSWORD_DATABASE
-        defalut value: root
-    - DATABASE_NAME
-        defalut value: productdb
-    - DATABASE_HOST
-        defalut value: localhost
-    - DATABASE_PORT
-        defalut value: 3306
+>    Environment avaliables:
+>    - USER_DATABASE
+>        defalut value: root
+>    - PASSWORD_DATABASE
+>        defalut value: root
+>    - DATABASE_NAME
+>        defalut value: productdb
+>    - DATABASE_HOST
+>        **this riquered information**
+>    - DATABASE_PORT
+>        defalut value: 3306
 
