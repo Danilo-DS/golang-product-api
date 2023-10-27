@@ -6,6 +6,7 @@ import (
 	. "product-api/src/models"
 )
 
+// ProductRepository is an implementation IRepository
 type ProductRepository struct {
 	connection *sql.DB
 }

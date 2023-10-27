@@ -8,7 +8,7 @@ import (
 	dotEnv "github.com/joho/godotenv"
 )
 
-// get .env https://stackoverflow.com/questions/66518873/how-to-read-env-files-by-runnnig-go-application
+// LoadEnvironment load environment variables of the application
 func LoadEnvironment() {
 
 	if err := dotEnv.Load("../.env"); err != nil {
@@ -16,6 +16,7 @@ func LoadEnvironment() {
 	}
 }
 
+// GetPort return formatted server port
 func GetPort() string {
 	return fmt.Sprintf(":%s", os.Getenv("SERVER_PORT"))
 }

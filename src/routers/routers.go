@@ -6,6 +6,7 @@ import (
 	muxRouter "github.com/gorilla/mux"
 )
 
+// Routers return all routers of the application
 func Routers() *muxRouter.Router {
 
 	routers := muxRouter.NewRouter()

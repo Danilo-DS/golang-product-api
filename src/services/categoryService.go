@@ -24,7 +24,7 @@ func GetAllCategories() ([]CategoryResponseDTO, error) {
 		return nil, err
 	}
 
-	return ParseResponseSlice[Category, CategoryResponseDTO](categories)
+	return ParseSliceEntityToDto[Category, CategoryResponseDTO](categories)
 }
 
 func GetCategoryById(id uint64) (CategoryDetailResponseDTO, error) {
@@ -45,7 +45,7 @@ func GetCategoryById(id uint64) (CategoryDetailResponseDTO, error) {
 		return CategoryDetailResponseDTO{}, errors.New("Category Not Found")
 	}
 
-	return ParseResponseStruct[Category, CategoryDetailResponseDTO](category)
+	return ParseEntityToDto[Category, CategoryDetailResponseDTO](category)
 }
 
 func EnableCategory(id uint64) error {
@@ -100,7 +100,7 @@ func DisableCategory(id uint64) error {
 
 func SaveCategory(request CategoryRequestDTO) (CategoryDetailResponseDTO, error) {
 
-	category, err := ParseRequestStruct[CategoryRequestDTO, Category](request)
+	category, err := ParseDtoToEntity[CategoryRequestDTO, Category](request)
 
 	var categoryRegistred CategoryDetailResponseDTO
 
@@ -120,12 +120,12 @@ func SaveCategory(request CategoryRequestDTO) (CategoryDetailResponseDTO, error)
 		return categoryRegistred, err
 	}
 
-	return ParseResponseStruct[Category, CategoryDetailResponseDTO](category)
+	return ParseEntityToDto[Category, CategoryDetailResponseDTO](category)
 }
 
 func UpdateCategory(id uint64, categoryRequest CategoryRequestDTO) error {
 
-	categoryUpdate, err := ParseRequestStruct[CategoryRequestDTO, Category](categoryRequest)
+	categoryUpdate, err := ParseDtoToEntity[CategoryRequestDTO, Category](categoryRequest)
 
 	if err != nil {
 		return err

@@ -24,7 +24,7 @@ func GetAllProducts() ([]ProductResponseDTO, error) {
 		return nil, err
 	}
 
-	return ParseResponseSlice[Product, ProductResponseDTO](products)
+	return ParseSliceEntityToDto[Product, ProductResponseDTO](products)
 }
 
 func GetProductById(id uint64) (ProductDetailResponseDTO, error) {
@@ -45,7 +45,7 @@ func GetProductById(id uint64) (ProductDetailResponseDTO, error) {
 		return ProductDetailResponseDTO{}, errors.New("Product Not Found")
 	}
 
-	return ParseResponseStruct[Product, ProductDetailResponseDTO](product)
+	return ParseEntityToDto[Product, ProductDetailResponseDTO](product)
 }
 
 func SearchProductByName(name string) ([]ProductResponseDTO, error) {
@@ -63,7 +63,7 @@ func SearchProductByName(name string) ([]ProductResponseDTO, error) {
 	}
 
 	if len(products) > 0 {
-		return ParseResponseSlice[Product, ProductResponseDTO](products)
+		return ParseSliceEntityToDto[Product, ProductResponseDTO](products)
 	}
 
 	return nil, errors.New("No products found")
@@ -71,7 +71,7 @@ func SearchProductByName(name string) ([]ProductResponseDTO, error) {
 
 func SaveProduct(request ProductRequestDTO) (ProductResponseDTO, error) {
 
-	product, err := ParseRequestStruct[ProductRequestDTO, Product](request)
+	product, err := ParseDtoToEntity[ProductRequestDTO, Product](request)
 
 	var productRegistred ProductResponseDTO
 
@@ -92,12 +92,12 @@ func SaveProduct(request ProductRequestDTO) (ProductResponseDTO, error) {
 		return productRegistred, err
 	}
 
-	return ParseResponseStruct[Product, ProductResponseDTO](product)
+	return ParseEntityToDto[Product, ProductResponseDTO](product)
 }
 
 func UpdateProduct(id uint64, request ProductRequestDTO) error {
 
-	productUpdate, err := ParseRequestStruct[ProductRequestDTO, Product](request)
+	productUpdate, err := ParseDtoToEntity[ProductRequestDTO, Product](request)
 
 	if err != nil {
 		return err

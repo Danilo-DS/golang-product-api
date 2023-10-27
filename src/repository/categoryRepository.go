@@ -5,6 +5,7 @@ import (
 	. "product-api/src/models"
 )
 
+// CategoryRepository is an implementation IRepository
 type CategoryRepository struct {
 	connection *sql.DB
 }

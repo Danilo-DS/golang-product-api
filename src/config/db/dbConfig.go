@@ -24,6 +24,7 @@ var databaseHost string
 var databasePort string
 var connectionUrl string
 
+// LoadConfigDB loads environment variables required for DB access configuration
 func LoadConfigDB() {
 
 	userDatabase = os.Getenv("USER_DATABASE")
@@ -40,6 +41,7 @@ func buildConnectionUrl() string {
 	return fmt.Sprintf(connectionUrl, userDatabase, passwordDatabase, databaseHost, databasePort, databaseName)
 }
 
+// StartConnection open connection with database
 func StartConnection() (*sql.DB, error) {
 
 	connection, err := sql.Open("mysql", buildConnectionUrl())
@@ -57,6 +59,7 @@ func StartConnection() (*sql.DB, error) {
 	return connection, nil
 }
 
+// LoadMigration load and to run scripts sql
 func LoadMigration() {
 
 	timeoutMigration, err := strconv.ParseInt(os.Getenv("TIMEOUT_MIGRATION"), 10, 64)
@@ -93,7 +96,8 @@ func LoadMigration() {
 		log.Fatal(err)
 	}
 
-	migration.Steps(2)
+	// The instruction specifies whether the scripts are creation or deletion, greater than 0 is creation, less than 0 is deletion
+	migration.Steps(1)
 
 }
 
