@@ -45,8 +45,7 @@ root
 1. Download the project and extract the zip file or fork this project from github and clone it.
 2. After downloading or cloning, enter the `root` folder.
 3. Run this command `docker build  -t golang-product-api -f ./docker/Dockerfile ./`, this command generates the docker iamge of the application.
-4. To run the application, use this command: 
-`docker run -d --name product-api-go -p 5000:5000 -e USER_DATABASE=productdb -e DATABASE_HOST=mysqldb --network golang_network golang-product-api`.
+4. To run the application, use this command: `docker run -d --name product-api-go -p 5000:5000 -e USER_DATABASE=productdb -e DATABASE_HOST=mysqldb --network golang_network golang-product-api`.
 
 > **OBS:** 
 >- You need to have docker installed on your computer.

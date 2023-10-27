@@ -15,7 +15,10 @@ func main() {
 	db.LoadConfigDB()
 	db.LoadMigration()
 
+	port := config.GetPort()
+
 	fmt.Println("Server Up")
-	log.Fatal(http.ListenAndServe(config.GetPort(), routers.Routers()))
+	fmt.Println("Port", port)
+	log.Fatal(http.ListenAndServe(port, routers.Routers()))
 
 }
