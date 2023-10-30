@@ -116,7 +116,7 @@ func LoadMigration() {
 
 func runMigration(numberScripts int, migration *migrate.Migrate) {
 
-	migrationErr := migration.Steps(numberScripts)
+	migrationErr := migration.Steps(numberScripts) // The instruction specifies whether the scripts are creation or deletion, greater than 0 is creation, less than 0 is deletion
 
 	_, dirty, err := migration.Version() // Get current version migration
 
