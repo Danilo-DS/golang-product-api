@@ -13,7 +13,7 @@ type CategoryProductRequestDTO struct {
 type CategoryResponseDTO struct {
 	Id     uint64 `json:"id" mapper:"id"`
 	Name   string `json:"name" mapper:"name"`
-	Active bool   `json:"isActive,omitempty" mapper:"active"`
+	Active bool   `json:"isActive" mapper:"active"`
 }
 
 type CategoryDetailResponseDTO struct {
