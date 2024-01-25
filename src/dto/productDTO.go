@@ -1,9 +1,10 @@
 package dto
 
 type ProductRequestDTO struct {
-	Name                      string  `json:"name" mapper:"name"`
-	Price                     float64 `json:"price" mapper:"price"`
-	CategoryProductRequestDTO `json:"category" mapper:"category"`
+	Name       string  `json:"name" mapper:"name"`
+	Price      float64 `json:"price" mapper:"price"`
+	CategoryId uint64  `json:"categoryId" mapper:"categoryId"`
+	//CategoryProductRequestDTO `json:"category" mapper:"category"`
 }
 
 type ProductResponseDTO struct {

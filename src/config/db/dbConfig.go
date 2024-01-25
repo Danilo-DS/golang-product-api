@@ -14,7 +14,13 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+
 	//Migration Imports End
+
+	//ORM
+	ormDriver "gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var userDatabase string
@@ -24,10 +30,7 @@ var databaseHost string
 var databasePort string
 var connectionUrl string
 
-//var newScripts int
-
-var versionBeforeMigration uint
-var versionAfterMigration uint
+//var connectionOrm *gorm.DB
 
 // LoadConfigDB loads environment variables required for DB access configuration
 func LoadConfigDB() {
@@ -58,6 +61,31 @@ func StartConnection() (*sql.DB, error) {
 
 	if err = connection.Ping(); err != nil {
 		connection.Close()
+		return nil, err
+	}
+
+	return connection, nil
+}
+
+// StartConnectionORM open connection with database
+func StartConnectionORM() (*gorm.DB, error) {
+
+	//conn, _ := StartConnection()
+
+	configGorm := &gorm.Config{
+		Logger:               configQueryLogs(),
+		DisableAutomaticPing: false,
+	}
+
+	configOrmDriver := ormDriver.New(ormDriver.Config{
+		DriverName: "mysql",
+		DSN:        buildConnectionUrl(),
+		//Conn: conn,
+	})
+
+	connection, err := gorm.Open(configOrmDriver, configGorm)
+
+	if err != nil {
 		return nil, err
 	}
 
@@ -163,4 +191,18 @@ func createDateBaseIfNotExists() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func configQueryLogs() logger.Interface {
+
+	return logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             time.Second, // Slow SQL threshold
+			LogLevel:                  logger.Info, // Log level
+			IgnoreRecordNotFoundError: false,       // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      true,        // Don't include params in the SQL log
+			Colorful:                  true,        // Enable/Disable color
+		},
+	)
 }

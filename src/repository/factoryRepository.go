@@ -16,7 +16,8 @@ type FactoryMethodImpl[T RepositoryType] struct {
 // GetRepository return a repository by specified type
 func (f *FactoryMethodImpl[T]) GetRepository() (*T, error) {
 	connection, err := db.StartConnection()
-	return &T{connection}, err
+	connectionOrm, err := db.StartConnectionORM()
+	return &T{connection, connectionOrm}, err
 }
 
 // InitFactory initialize repository factory

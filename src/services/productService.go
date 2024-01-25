@@ -145,7 +145,8 @@ func DeleteProductById(id uint64) error {
 		if err = repository.DeleteById(id); err != nil {
 			return err
 		}
+		return nil
 	}
 
-	return nil
+	return errors.New("Nonexistent product ID.")
 }
